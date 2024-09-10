@@ -37,3 +37,4 @@ next-env.d.ts
 
 
 /.env.local
+/service_key.json
