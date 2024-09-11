@@ -15,6 +15,7 @@ import { db } from "@/firebase";
 import { User } from "@clerk/nextjs/server";
 import { useUser } from "@clerk/nextjs";
 import { DocumentData } from "firebase-admin/firestore";
+import { SidebarOption } from "./SidebarOption";
 interface RoomDocument extends DocumentData {
   createdAt: String;
   role: "Owner" | "Editor";
@@ -80,12 +81,23 @@ export const Sidebar = () => {
               My Documents
             </h2>
             {groupedData.Owner.map((doc) => (
-              <p className="text-black font-semibold text-sm">{doc.roomId} </p>
-              // <SidebarOption key = {doc.Id} id = {doc.Id} href={`/doc/${doc.id}`}/>
+              // <p className="text-black font-semibold text-sm">{doc.roomId} </p>
+              <SidebarOption key= {doc.id} id = {doc.id} href={`/doc/${doc.id}`}/>
             ))}
           </>
         )}
       </div>
+      {groupedData.Editor.length>0 && (
+         <>
+         <h2 className=" text-gray-500 font-semibold text-sm">
+         Shared with Me
+         </h2>
+         {groupedData.Owner.map((doc) => (
+           // <p className="text-black font-semibold text-sm">{doc.roomId} </p>
+           <SidebarOption key= {doc.id} id = {doc.id} href={`/doc/${doc.id}`}/>
+         ))}
+       </>
+      )}
 
       {/* M
     ydocument */}
