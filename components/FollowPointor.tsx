@@ -1,5 +1,8 @@
-import { stringToColor } from "@/lib/stringToColor";
-import { motion} from "framer-motion";
+
+import { useUser } from "@clerk/nextjs";
+import { motion } from "framer-motion";
+import { stringToColor } from "@/lib/stringToColor"; // Adjust the import path if needed
+
 function FollowPointor({
   x,
   y,
@@ -7,11 +10,17 @@ function FollowPointor({
 }: {
   x: number;
   y: number;
-  info: { name: string; email: string;avatar: string };
-  
+  info: { name: string; email: string; avatar: string };
 }) {
-  const color = stringToColor(info?.email || "3");
-  console.log(info?.name);
+  const { user, isLoaded, isSignedIn } = useUser();
+  
+  // Get the email or signed-in user name to generate a color
+  const userIdentifier = info?.email || (isSignedIn && isLoaded ? user?.email : "default");
+  const color = stringToColor(userIdentifier || "default");  // Provide a default string if neither email nor signed-in user info is available
+
+  // Use the display name from info or signed-in user's name if provided
+  const displayName = info?.name || (isSignedIn && isLoaded ? user?.fullName : "naval");  // Default to "naval" if no name is provided
+
   return (
     <motion.div
       className="h-4 w-4 rounded-full absolute z-50"
@@ -61,14 +70,12 @@ function FollowPointor({
           scale: 0.5,
           opacity: 0,
         }}
-        className="px-2 py-2 bg-neutral-200 text-black font-bold whitespace-nowrap min-w-max text-xs rounded-full"
+        className="px-2 py-2 bg-neutral-200 text-white font-bold whitespace-nowrap min-w-max text-xs rounded-full"
       >
-       
-       {info?.name || info?.email}
+        {displayName}  {/* Use displayName here */}
       </motion.div>
-      
     </motion.div>
-    
   );
 }
+
 export default FollowPointor;

@@ -6,6 +6,7 @@ import { Button } from "./ui/button";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "@/firebase";
 import { useDocumentData } from "react-firebase-hooks/firestore";
+import Editor from "./Editor";
 
 const Document = ({ id }: { id: string }) => {
   const[data,loading,error]=useDocumentData(doc(db,"documents",id));
@@ -46,6 +47,8 @@ const Document = ({ id }: { id: string }) => {
         </form>
       </div>
       <div>{/* manageuser and avator */}</div>
+      <hr className="pb-10"></hr>
+      <Editor></Editor>
     </div>
   );
 };
