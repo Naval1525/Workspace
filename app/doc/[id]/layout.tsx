@@ -1,7 +1,8 @@
+import RoomProvider from "@/components/RoomProvider";
 import { auth } from "@clerk/nextjs/server";
 
-const Doclayout = ({children,params:{id}}:{ children: React.ReactNode ,params:{id:string}}) => {
+const Doclayout = ({children,params:{id}}:{ children: React.ReactNode ,params:{id:string}} ) => {
   auth().protect();
-  return <div>{children}</div>;
+  return <RoomProvider roomId={id}>{children}</RoomProvider>;
 };
 export default Doclayout;
