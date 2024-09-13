@@ -9,6 +9,7 @@ import { useDocumentData } from "react-firebase-hooks/firestore";
 import Editor from "./Editor";
 import useOwner from "@/lib/useOwner";
 import DeleteCodument from "./DeleteCodument";
+import InviteUser from "./Inviteuser";
 // Ensure correct import
 
 const Document = ({ id }: { id: string }) => {
@@ -50,13 +51,15 @@ const Document = ({ id }: { id: string }) => {
               
             </>
           )} */}
+          
+          <InviteUser></InviteUser>
           <DeleteCodument></DeleteCodument>
         </form>
       </div>
       <div>{/* Manage user and avatar */}</div>
       <hr className="pb-10" />
 
-      <Editor  />
+      <Editor   />
     </div>
   );
 };

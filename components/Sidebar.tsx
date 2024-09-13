@@ -86,7 +86,7 @@ export const Sidebar = () => {
             ))}
           </>
         )}
-      </div>
+    
       {groupedData.Editor.length>0 && (
          <>
          <h2 className=" text-gray-500 font-semibold text-sm">
@@ -98,6 +98,7 @@ export const Sidebar = () => {
          ))}
        </>
       )}
+        </div>
 
       {/* M
     ydocument */}

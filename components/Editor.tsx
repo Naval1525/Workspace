@@ -37,9 +37,9 @@ function BlockNote({ doc, provider, darkMode }: EditorProps) {
   });
 
   return (
-    <div className="relative max-h-6xl">
+    <div className="relative max-w-6xl h-full">
       <BlockNoteView
-        className="mix-h-screen"
+        className="h-full"
         editor={editor}
         theme={darkMode ? "dark" : "light"}
       ></BlockNoteView>
@@ -74,7 +74,7 @@ function Editor() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto">
+    <div className="max-w-6xl mx-auto max-h-screen">
       <div className="flex items-center gap-2 justify-end mb-10">
         {/* translate document */}
         {/* chat todcou */}
@@ -83,7 +83,9 @@ function Editor() {
           {darkMode ? <SunIcon></SunIcon> : <MoonIcon></MoonIcon>}
         </Button>
       </div>
-      <BlockNote doc={doc} provider={provider} darkMode={darkMode}></BlockNote>
+      <div className="max-h-screen">
+      <BlockNote doc={doc} provider={provider} darkMode={darkMode} ></BlockNote>
+      </div>
     </div>
   );
 }

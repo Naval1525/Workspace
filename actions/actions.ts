@@ -71,3 +71,28 @@ export async function deleteDocument(roomId: string) {
       return { success: false, error: error.message };
     }
   }
+
+
+  export async function  inviteUserToDocument(roomId:string,email:string){
+    auth().protect();
+    try{
+       await admindb
+       .collection("users")
+       .doc("email")
+       .collection("rooms")
+       .doc(roomId)
+       .set({
+              userId:email,
+              role:"Editor",
+              createdAt:new Date(),
+              roomId,
+       })
+         return {success:true};
+
+    }catch(error){
+        console.error("Error in inviteUserToDocument:",error);
+        return {success:false,error:error.message};
+    }
+
+
+  }
