@@ -12,29 +12,32 @@ import "@blocknote/core/fonts/inter.css";
 import "@blocknote/shadcn/style.css";
 import { BlockNoteEditor } from "@blocknote/core";
 import { stringToColor } from "@/lib/stringToColor";
-import { userInfo } from "os";
+import { useUser } from "@clerk/nextjs"; // Import useUser from Clerk
 
 type EditorProps = {
   doc: Y.Doc;
   provider: any;
   darkMode: boolean;
 };
+
 function BlockNote({ doc, provider, darkMode }: EditorProps) {
   const userinfo = useSelf((me) => me.info);
-  const editor : BlockNoteEditor = useCreateBlockNote({
-    collaboration:{
-      provider,
-      fragment:doc.getXmlFragment("document-store"),
-      user:{
-        name:userInfo?.name,
-        color:stringToColor(userInfo?.email),
-      }
+  const { user } = useUser(); // Get user info from Clerk
 
-    }
+  const editor: BlockNoteEditor = useCreateBlockNote({
+    collaboration: {
+      provider,
+      fragment: doc.getXmlFragment("document-store"),
+      user: {
+        name: user?.fullName || userinfo?.name, // Use Clerk user name or fallback to userinfo name
+        // color: stringToColor(user?.fullName || userinfo?.name), // Use Clerk user name for color generation
+        color:"#FF69B4"
+      },
+    },
   });
 
   return (
-    <div className="relative max-h-6xl ">
+    <div className="relative max-h-6xl">
       <BlockNoteView
         className="mix-h-screen"
         editor={editor}
@@ -43,6 +46,7 @@ function BlockNote({ doc, provider, darkMode }: EditorProps) {
     </div>
   );
 }
+
 function Editor() {
   const room = useRoom();
   const [doc, setDoc] = useState<Y.Doc>();
@@ -53,6 +57,7 @@ function Editor() {
       ? "text-gray-300 bg-gray-700 hover:bg-gray-100 hover: text-gray-700"
       : "text-gray-700 bg-gray-200 hover:bg-gray-300 hover: text-gray-700"
   }`;
+
   useEffect(() => {
     const ydoc = new Y.Doc();
     const yprovider = new LiveblocksYjsProvider(room, ydoc);
@@ -63,12 +68,14 @@ function Editor() {
       yprovider?.destroy();
     };
   }, [room]);
-  if(!doc||!provider){
+
+  if (!doc || !provider) {
     return null;
   }
+
   return (
     <div className="max-w-6xl mx-auto">
-      <div className="flex items-center  gap-2 justify-end mb-10">
+      <div className="flex items-center gap-2 justify-end mb-10">
         {/* translate document */}
         {/* chat todcou */}
 
@@ -80,4 +87,5 @@ function Editor() {
     </div>
   );
 }
+
 export default Editor;

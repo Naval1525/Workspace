@@ -1,4 +1,3 @@
-
 import { useUser } from "@clerk/nextjs";
 import { motion } from "framer-motion";
 import { stringToColor } from "@/lib/stringToColor"; // Adjust the import path if needed
@@ -14,10 +13,10 @@ function FollowPointor({
 }) {
   const { user, isLoaded, isSignedIn } = useUser();
   
-  // Get the email or signed-in user name to generate a color
-  const userIdentifier = info?.email || (isSignedIn && isLoaded ? user?.email : "default");
-  const color = stringToColor(userIdentifier || "default");  // Provide a default string if neither email nor signed-in user info is available
-
+  // Get the username or email of the signed-in user to generate a color
+  const userIdentifier = info?.email || (isSignedIn && isLoaded ? user?.username : "default");
+  // const color = stringToColor(userIdentifier || "default");  // Provide a default string if neither email nor signed-in user info is available
+const color="#FF69B4";
   // Use the display name from info or signed-in user's name if provided
   const displayName = info?.name || (isSignedIn && isLoaded ? user?.fullName : "naval");  // Default to "naval" if no name is provided
 
