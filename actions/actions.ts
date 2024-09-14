@@ -96,3 +96,19 @@ export async function deleteDocument(roomId: string) {
 
 
   }
+
+    export async function removeUserFromDocument(roomId: string, email: string) {
+        auth().protect();
+        try {
+        await admindb
+            .collection("users")
+            .doc(email)
+            .collection("rooms")
+            .doc(roomId)
+            .delete();
+        return { success: true };
+        } catch (error) {
+        console.error("Error in removeUserFromDocument:", error);
+        return { success: false, error: error.message };
+        }
+    }

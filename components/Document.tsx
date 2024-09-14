@@ -10,6 +10,8 @@ import Editor from "./Editor";
 import useOwner from "@/lib/useOwner";
 import DeleteCodument from "./DeleteCodument";
 import InviteUser from "./Inviteuser";
+import ManageUsers from "./ManageUsers";
+import Avatars from "./Avatars";
 // Ensure correct import
 
 const Document = ({ id }: { id: string }) => {
@@ -56,7 +58,10 @@ const Document = ({ id }: { id: string }) => {
           <DeleteCodument></DeleteCodument>
         </form>
       </div>
-      <div>{/* Manage user and avatar */}</div>
+      <div className="flex max-w-6xl mx-auto   mb-5 gap-x-[69vh]">{/* Manage user and avatar */}
+      <ManageUsers></ManageUsers>
+      {/* <Avatars></Avatars> */}
+      </div>
       <hr className="pb-10" />
 
       <Editor   />
